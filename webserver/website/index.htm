@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tracker</title>
+    </head>
+    <body>
+        <h1>Add items</h1>
+        <div class="form">
+            <label>Name</label>
+                <select name="name" id="name">
+                    <option value="Tommy">Tommy</option>
+                    <option value="Tyler">Tyler</option>
+                    <option value="Noah">Noah</option>
+                    <option value="Mike">Mike</option>
+                    <option value="Cale">Cale</option>
+                    <option value="Cale">Unknown</option>
+                </select>
+            <label>Item</label>
+            <input id="item" type="text">
+            <label>Experation</label>
+            <input id="exp" type="date">
+            <button onclick="add()">Add item</button>
+        </div>
+    </body>
+    <script>
+        function add(){
+            var url = ("http://192.168.0.63:80/add");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            xhr.onload = function(){
+            console.log(xhr.responseText);
+            if(xhr.responseText == "Done"){
+                    alert("Added");
+                    document.getElementById("item").value = '';
+                    document.getElementById("exp").value = Date("00/00/0000");
+                }else{
+                    alert("Error");
+                }
+            }
+            xhr.send(JSON.stringify({
+                "owner": document.getElementById("name").value,
+                "item": document.getElementById("item").value,
+                "exp": document.getElementById("exp").value
+            }));
+       }
+    </script>
+    <style>
+        *{
+           margin: 0xp;
+           padding : 0px;
+        }
+    </style>
+</html>

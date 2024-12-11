@@ -1,0 +1,24 @@
+{
+  "name": "webserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylerlewis1/FridgeTracker.git"
+  },
+  "author": "Tyler Lewis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylerlewis1/FridgeTracker/issues"
+  },
+  "homepage": "https://github.com/tylerlewis1/FridgeTracker#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express.js": "^1.0.0",
+    "http": "^0.0.1-security"
+  }
+}

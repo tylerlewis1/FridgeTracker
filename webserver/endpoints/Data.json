@@ -1,0 +1,44 @@
+[
+  {
+    "item": "milk",
+    "owner": "Mike",
+    "exp": "2024-12-16",
+    "id": 95577
+  },
+  {
+    "item": "milk",
+    "owner": "Noah",
+    "exp": "2024-11-24",
+    "id": 5361
+  },
+  {
+    "item": "lunch meat",
+    "owner": "Tyler",
+    "exp": "2025-01-03",
+    "id": 71218
+  },
+  {
+    "item": "garlic",
+    "owner": "Noah",
+    "exp": "2026-07-09",
+    "id": 23493
+  },
+  {
+    "item": "beef broth",
+    "owner": "Noah",
+    "exp": "2025-06-11",
+    "id": 74519
+  },
+  {
+    "item": "Milk in the bottom of the fridge ",
+    "owner": "Tommy",
+    "exp": "2024-08-14",
+    "id": 9434
+  },
+  {
+    "item": "Eggs",
+    "owner": "Mike",
+    "exp": "2024-12-12",
+    "id": 824
+  }
+]

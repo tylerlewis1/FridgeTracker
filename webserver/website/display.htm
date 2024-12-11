@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tracker</title>
+        <META HTTP-EQUIV="Refresh" CONTENT="15">
+    </head>
+    <body>
+        <h1>Items</h1>
+        <table id="items">
+            <th>Owner</th>
+            <th>Item</th>
+            <th>ID</th>
+            <th>Exp Date</th>
+        </table>
+    </body>
+    <script>
+        const xhr = new XMLHttpRequest();
+        var data = [];
+        xhr.open("GET", "http://192.168.0.63:80/get");
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.response.teams);
+                for(i = 0; i < xhr.response.length; i++){
+                    data.push(xhr.response[i])
+
+                }
+                data = Sort(data);
+                for(i = 0; i < data.length; i++){
+                    document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<tr id="td' + data[i].id + '"><td>' + data[i].owner + '</td><td>' + data[i].item + '</td><td id=' + data[i].id + '>' + data[i].id + '</td><td>' + data[i].daystillexpire + '</td><td><button onclick="rm(' + data[i].id + ')">Remove</button></td></tr>'
+                    if(data[i].daystillexpire <= 0){
+                        document.getElementById("td" + data[i].id).style.backgroundColor = "red";
+                    }
+                }
+
+
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        function Sort(data){
+            var temp = [];
+            for(i = data.length - 1; i > 0; i--){
+                for(x = 1; x <= i; x++){
+                    if(data[x - 1].daystillexpire > data[x].daystillexpire){
+                        temp = data[x];
+                        data[x] = data[x - 1];
+                        data[x - 1] = temp;
+                    }
+                }   
+            }
+            return data;
+        }
+        function rm(id){
+            var url = ("http://192.168.0.63:80/rm");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            xhr.onload = function(){
+            console.log(xhr.responseText);
+            if(xhr.responseText == "Done"){
+                    alert("Removed");
+                    window.location.replace("");
+                }else{
+                    alert("Error");
+                }
+            }
+            xhr.send(JSON.stringify({
+                "id": id
+            }));
+        }
+    </script>
+    <style>
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+            img{
+                position: relative;
+                width: 100%;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                font-family: sans-serif;
+                min-width: 400px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            }
+            table th {
+                background-color: #009879;
+                color: #ffffff;
+                text-align: center;
+            }
+            table td{
+                padding: 12px 15px;
+                width: 20%;
+                text-align: center;
+            }
+            table tbody tr {
+                border-bottom: 1px solid #dddddd;
+            }
+            h1{
+                text-align: center;
+            }
+    </style>
+</html>

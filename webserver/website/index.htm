@@ -2,11 +2,12 @@
 <html>
     <head>
         <title>Tracker</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <h1>Add items</h1>
         <div class="form">
-            <label>Name</label>
+            <h3>Name</h3>
                 <select name="name" id="name">
                     <option value="Tommy">Tommy</option>
                     <option value="Tyler">Tyler</option>
@@ -15,16 +16,16 @@
                     <option value="Cale">Cale</option>
                     <option value="Unknown">Unknown</option>
                 </select>
-            <label>Item</label>
+            <h3>Item</h3>
             <input id="item" type="text">
-            <label>Experation</label>
+            <h3>Expiration date</h3>
             <input id="exp" type="date">
             <button onclick="add()">Add item</button>
         </div>
     </body>
     <script>
         function add(){
-            var url = ("http://192.168.0.63:80/add");
+            var url = ("http://192.168.0.52:80/add");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
@@ -50,5 +51,19 @@
            margin: 0xp;
            padding : 0px;
         }
+        html{
+            height: 100%;
+        }
+        h1{
+            text-align: center;
+        }
+        input, select, button{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        
+
     </style>
 </html>

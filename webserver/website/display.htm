@@ -17,7 +17,7 @@
     <script>
         const xhr = new XMLHttpRequest();
         var data = [];
-        xhr.open("GET", "http://"+location.host+":123/get");
+        xhr.open("GET", "http://"+location.host+"/get");
         xhr.send();
         xhr.responseType = "json";
         xhr.onload = () => {
@@ -54,7 +54,7 @@
             return data;
         }
         function rm(id){
-            var url = ("http://"+location.host+":123/rm");
+            var url = ("http://"+location.host+"/rm");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')

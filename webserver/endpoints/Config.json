@@ -1,3 +1,7 @@
-{
+[{
     "names": ["Tyler", "Noah", "Tommy", "Mike", "Cale", "Unknown"]
-}
+},{
+    "emails": [],
+    "senderUsername": "",
+    "senderPassword": ""
+}]

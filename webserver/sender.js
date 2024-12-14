@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const add = require(__dirname + '/endpoints/Add.js');
 const get = require(__dirname + '/endpoints/Get.js');
+const config = require(__dirname + '/endpoints/ConfigSender.js');
 const remove = require(__dirname + '/endpoints/Remove.js');
 const app = express();
 var bodyParser = require('body-parser');
@@ -16,6 +17,7 @@ app.get("/display", (req, res, next) =>{
     res.status(200);
 });
 app.use("/add", add);
+app.use("/config", config)
 app.use("/get", get);
 app.use("/rm", remove);
 

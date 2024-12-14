@@ -8,23 +8,34 @@
         <h1>Add items</h1>
         <div class="form">
             <h3>Name</h3>
-                <select name="name" id="name">
-                    <option value="Tommy">Tommy</option>
-                    <option value="Tyler">Tyler</option>
-                    <option value="Noah">Noah</option>
-                    <option value="Mike">Mike</option>
-                    <option value="Cale">Cale</option>
-                    <option value="Unknown">Unknown</option>
+                <select class="name" id="name">
                 </select>
             <h3>Item</h3>
             <input id="item" type="text">
             <h3>Expiration date</h3>
             <input id="exp" type="date">
             <button onclick="add()">Add item</button>
+            <button onclick="manage()">View and Manage Items</button>
         </div>
     </body>
     <script>
-       function add(){
+        const xhr = new XMLHttpRequest();
+        var data = [];
+        xhr.open("GET", "http://"+location.host+"/config");
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                for(i = 0; i < xhr.response.names.length; i++){
+                    
+                    document.getElementById("name").innerHTML = document.getElementById("name").innerHTML + '<option value="' + xhr.response.names[i]+ '">' + xhr.response.names[i] + '</option>'
+                }
+                
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };        
+        function add(){
             var url = ("http://" + location.host + "/add");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
@@ -45,6 +56,9 @@
                 "exp": document.getElementById("exp").value
             }));
        }
+       function manage(){
+            window.location.replace("http://"+location.host+"/display");
+       }
     </script>
     <style>
         *{
@@ -62,8 +76,8 @@
             padding: 12px 20px;
             margin: 8px 0;
             box-sizing: border-box;
+            display: block;
+            height: 50px;
         }
-        
-
     </style>
 </html>

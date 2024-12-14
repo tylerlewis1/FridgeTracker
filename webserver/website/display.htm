@@ -10,7 +10,6 @@
         <table id="items">
             <th>Owner</th>
             <th>Item</th>
-            <th>ID</th>
             <th>Days till expired</th>
         </table>
     </body>
@@ -29,7 +28,7 @@
                 }
                 data = Sort(data);
                 for(i = 0; i < data.length; i++){
-                    document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<tr id="td' + data[i].id + '"><td>' + data[i].owner + '</td><td>' + data[i].item + '</td><td id=' + data[i].id + '>' + data[i].id + '</td><td>' + data[i].daystillexpire + '</td><td><button onclick="rm(' + data[i].id + ')">Remove</button></td></tr>'
+                    document.getElementById("items").innerHTML = document.getElementById("items").innerHTML + '<tr id="td' + data[i].id + '"><td>' + data[i].owner + '</td><td>' + data[i].item + '</td><td>' + data[i].daystillexpire + '</td><td><button onclick="rm(' + data[i].id + ')">Remove</button></td></tr>'
                     if(data[i].daystillexpire <= 0){
                         document.getElementById("td" + data[i].id).style.backgroundColor = "red";
                     }

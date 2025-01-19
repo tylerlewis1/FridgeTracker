@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CONFIG</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>FRIDGE CONFIG</h1>
+        <div class="form">
+            <h1>Users in house hold:</h1>
+            <hr>
+            <table id="names">
+                <tr>
+                    <th>Name</th>
+                    <th>Remove</th>
+                </tr>
+            </table>
+            <h1>Send Emails?</h1>
+            <hr>
+            <input onclick="tEmails()" id="sendEmails" type="checkbox">
+            <h1>Email Addresses</h1>
+            <hr>
+            <table id="address">
+                <tr>
+                    <th>Address</th>
+                    <th>Remove</th>
+                </tr>
+            </table>
+            <h1>Email Key</h1>
+            <hr>
+            <label>Sender Email</label>
+            <input id="uName"></input>
+            <label>Sender Password</label>
+            <input id="pWord"></input>
+        </div>
+        <button onclick="updateKey()">Save</button>
+    </body>
+    <script>
+        const xhr = new XMLHttpRequest();
+        var data;
+        xhr.open("GET", "http://"+location.host+"/config/full");
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+            data = xhr.response;
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.response);
+                //emails
+                for(i = 0;xhr.response[1].emails.length > i; i++){
+                    document.getElementById("address").innerHTML += "<tr><td id='email" + String(i) + "'>" + xhr.response[1].emails[i] + "</td><td><button onclick='removeE(" + String(i) + ")'>Remove</button></td></tr>"
+                }
+                document.getElementById("address").innerHTML += "<tr><td><input id='addedEmail'></td><td><button onclick='addE()'>Add</button></td></tr>"
+                //names
+                for(i = 0;xhr.response[0].names.length > i; i++){
+                    document.getElementById("names").innerHTML += "<tr><td id='name" + String(i) + "'>" + xhr.response[0].names[i] + "</td><td><button onclick='removeN(" + String(i) + ")'>Remove</button></td></tr>"
+                }
+                document.getElementById("names").innerHTML += "<tr><td><input id='addedName'></td><td><button onclick='addN()'>Add</button></td></tr>"
+                //send emails
+                if(xhr.response[1].sendEmails == true){
+                    document.getElementById("sendEmails").checked = true;
+                } else {
+                    document.getElementById("sendEmails").checked = false;
+                }
+                document.getElementById("uName").value = xhr.response[1].senderUsername;
+                document.getElementById("pWord").value = xhr.response[1].senderPassword;
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };        
+        function addE(){
+            data[1].emails.push(document.getElementById("addedEmail").value);
+            save();
+        }
+        function removeE(index){
+            console.log(document.getElementById("email" + index).innerText);
+            console.log(document.getElementById("name" + index).innerText);
+            var tempEmails = [];
+            for(i = 0; i < data[1].emails.length; i++){
+                if(data[1].emails[i] != document.getElementById("email" + index).innerText){
+                    tempEmails.push(data[1].emails[i]);
+                }
+            }
+            data[1].emails = tempEmails;
+            save();
+        }
+        function addN(){
+            data[0].names.push(document.getElementById("addedName").value);
+            save();
+        }
+        function removeN(index){
+            console.log(document.getElementById("name" + index).innerText);
+            var tempNames = [];
+            for(i = 0; i < data[0].names.length; i++){
+                if(data[0].names[i] != document.getElementById("name" + index).innerText){
+                    tempNames.push(data[0].names[i]);
+                }
+            }
+            data[0].names = tempNames;
+            save();
+        }
+        function tEmails(){
+            data[1].sendEmails = document.getElementById("sendEmails").checked;
+            save();
+        }
+        function updateKey(){
+            data[1].senderUsername = document.getElementById("uName").value;
+            data[1].senderPassword = document.getElementById("pWord").value;
+            save();
+        }
+        function save(){
+            var url = ("http://" + location.host + "/edit");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            xhr.onload = function(){
+            console.log(xhr.responseText);
+            if(xhr.responseText == "Done"){
+                    alert("Saved");
+                }else{
+                    alert("Error");
+                }
+                location.reload();
+            }
+            xhr.send(JSON.stringify(data));
+        }
+    </script>
+    <style>
+        *{
+           margin: 0xp;
+           padding : 0px;
+        }
+        html{
+            height: 100%;
+        }
+        h1{
+            text-align: center;
+        }
+        input, select, button{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            display: block;
+            height: 50px;
+        }
+        table{
+            margin: auto;
+        }
+    </style>
+</html>

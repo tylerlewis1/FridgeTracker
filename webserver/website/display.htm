@@ -11,7 +11,9 @@
             <th>Owner</th>
             <th>Item</th>
             <th>Days till expired</th>
+            <th>Action</th>
         </table>
+        <footer>Tyler Lewis 2024</footer>
     </body>
     <script>
         const xhr = new XMLHttpRequest();
@@ -76,33 +78,41 @@
                 margin: 0px;
                 padding: 0px;
             }
-            img{
-                position: relative;
-                width: 100%;
+            body {
+                margin: 0;
+                font-family: sans-serif;
+                font-weight: 100;
+            }
+            button{
+                box-sizing: border-box;
+                display: block;
             }
             table {
-                width: 100%;
+                width: 95%;
+                margin: auto;
                 border-collapse: collapse;
-                margin: 25px 0;
-                font-size: 0.9em;
-                font-family: sans-serif;
-                min-width: 400px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
             }
-            table th {
-                background-color: #009879;
-                color: #ffffff;
-                text-align: center;
+
+            th,
+            td {
+                padding: 15px;
+                background-color: rgba(255,255,255,0.2);
+                color: black;
             }
-            table td{
-                padding: 12px 15px;
-                width: 20%;
-                text-align: center;
+
+            th {
+                text-align: left;
             }
-            table tbody tr {
-                border-bottom: 1px solid #dddddd;
-            }
+        
             h1{
+                text-align: center;
+            }
+            footer{
+                position: relative;
+                bottom: 0px;
+                width: 100%;
                 text-align: center;
             }
     </style>

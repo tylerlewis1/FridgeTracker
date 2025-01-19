@@ -14,6 +14,9 @@ var transporter = nodemailer.createTransport({
 });
 
 schedule.scheduleJob('0 0 * * *', () => { 
+  datafile = fs.readFileSync(__dirname + "/Config.json");
+  currentdata = JSON.parse(datafile);
+  if(currentdata[1].sendEmails == true){
     var date = new Date();
     let foodDataFile = fs.readFileSync(__dirname + "/Data.json");
     let foodData = JSON.parse(foodDataFile);
@@ -27,22 +30,26 @@ schedule.scheduleJob('0 0 * * *', () => {
                 owner: foodData[i].owner,
                 daysExp: Math.round((d1- date) / (1000 * 60 * 60 * 24))
             });
-            message = message + foodData[i].item + " that is owned by " + foodData[i].owner + " is expired by " + Math.abs(Math.round((d1- date) / (1000 * 60 * 60 * 24))) + " days expired!!\n";
+            message = message + "<li><b>" + foodData[i].item + "</b> that is owned by " + foodData[i].owner + " is expired by " + Math.abs(Math.round((d1- date) / (1000 * 60 * 60 * 24))) + " days!!\n </li>";
         }
     }
-    for(i = 0; currentdata[1].emails.length > i;i++){
-        var mailOptions = {
-            from: currentdata[1].senderUsername,
-            to: currentdata[1].emails[i],
-            subject: 'YOUR FRIDGE HAS EXPIRED FOOD!!!',
-            text: message
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
+    
+    if(expFood != []){
+      for(i = 0; currentdata[1].emails.length > i;i++){
+          var mailOptions = {
+              from: currentdata[1].senderUsername,
+              to: currentdata[1].emails[i],
+              subject: 'YOUR FRIDGE HAS EXPIRED FOOD!!!',
+              html: message
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+      }
     }
+  }
 });

@@ -33,8 +33,7 @@ schedule.scheduleJob('0 0 * * *', () => {
             message = message + "<li><b>" + foodData[i].item + "</b> that is owned by " + foodData[i].owner + " is expired by " + Math.abs(Math.round((d1- date) / (1000 * 60 * 60 * 24))) + " days!!\n </li>";
         }
     }
-    
-    if(expFood != []){
+    if(expFood.length != 0){
       for(i = 0; currentdata[1].emails.length > i;i++){
           var mailOptions = {
               from: currentdata[1].senderUsername,
